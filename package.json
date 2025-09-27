@@ -1,0 +1,10 @@
+{
+  "name": "certificates-generator",
+  "version": "1.0.0",
+  "scripts": {
+    "generate": "node scripts/fetch-and-generate.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.10.1"
+  }
+}
