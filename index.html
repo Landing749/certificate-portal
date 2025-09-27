@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Certificates Portal</title>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDaatY6x9LQGlkECYYglW9q4Ay-VS647Rg",
+      authDomain: "certificates-portal-84366.firebaseapp.com",
+      databaseURL: "https://certificates-portal-84366-default-rtdb.firebaseio.com",
+      projectId: "certificates-portal-84366",
+      storageBucket: "certificates-portal-84366.appspot.com",
+      messagingSenderId: "679860586927",
+      appId: "1:679860586927:web:ab1eca98d0ff886603475a"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .admin-form {
+      width: 400px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+    input, button {
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+    }
+    button {
+      background: #d4af37;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-form">
+    <h2>Add New Certificate</h2>
+    <form id="certForm">
+      <input type="text" id="id" placeholder="Unique ID (e.g. juan-dela-cruz)" required>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="award" placeholder="Award Title" required>
+      <input type="text" id="committee" placeholder="Committee" required>
+      <input type="date" id="date" required>
+      <button type="submit">Save Certificate</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    document.getElementById("certForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const id = document.getElementById("id").value.trim();
+      const data = {
+        name: document.getElementById("name").value,
+        award: document.getElementById("award").value,
+        committee: document.getElementById("committee").value,
+        date: document.getElementById("date").value
+      };
+      db.ref("certificates/" + id).set(data)
+        .then(() => document.getElementById("status").innerText = "✅ Certificate saved!")
+        .catch(err => document.getElementById("status").innerText = "❌ " + err.message);
+    });
+  </script>
+</body>
+</html>
